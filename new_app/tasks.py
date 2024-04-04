@@ -12,8 +12,12 @@ def get_data_from_olx():
     homes = soup.select(".css-oukcj3 > .css-1sw7q4x > a > .css-qfzx1y > .css-1venxj6 > .css-1apmciz")
 
     for home in homes:
-        app = OlxHome()
-        app.name = home.findChildren()[1].text.strip()
-        app.summHome=home.findChildren()[2].text.strip()
-        app.accept=home.findChildren()[3].text.strip()
+        app = OlxHome.objects.create(
+            name = home.findChildren()[1].text.strip(),
+            summHome = home.findChildren()[2].text.strip(),
+            accept = home.findChildren()[3].text.strip()
+        )
+        # app.name = home.findChildren()[1].text.strip()
+        # app.summHome=home.findChildren()[2].text.strip()
+        # app.accept=home.findChildren()[3].text.strip()
         app.save()
