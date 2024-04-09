@@ -138,7 +138,7 @@ from celery.schedules import crontab
 
 CELERY_BEAT_SCHEDULE = {
     "sample_task": {
-        "task": "new_app.tasks.get_data_from_olx",
-        "schedule": crontab(hour="*/3"),
+        # "task": "new_app.tasks.get_data_from_olx",
+        # "schedule": crontab(hour="*/3"),
     },
 }

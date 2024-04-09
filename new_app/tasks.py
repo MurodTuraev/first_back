@@ -3,21 +3,21 @@ from time import sleep
 import requests
 from bs4 import BeautifulSoup
 from new_app.models import OlxHome
+import logging
+
+logger = logging.getLogger(__name__)
 
 @shared_task()
 def get_data_from_olx():
     html = requests.get("https://www.olx.uz/nedvizhimost/kvartiry/prodazha/").text
     soup = BeautifulSoup(html, "html.parser")
 
-    homes = soup.select(".css-oukcj3 > .css-1sw7q4x > a > .css-qfzx1y > .css-1venxj6 > .css-1apmciz")
-
-    for home in homes:
+    homes = soup.find(attrs={"class": "listing-grid-container"})
+    logger.info("Starts")
+    logger.info(homes)
+    for home in homes.find_all(attrs={"type": "list"}):
         app = OlxHome.objects.create(
-            name = home.findChildren()[1].text.strip(),
-            summHome = home.findChildren()[2].text.strip(),
-            accept = home.findChildren()[3].text.strip()
+            name = home.text,
         )
-        # app.name = home.findChildren()[1].text.strip()
-        # app.summHome=home.findChildren()[2].text.strip()
-        # app.accept=home.findChildren()[3].text.strip()
-        app.save()
+        logger.info(home.findChildren()[1].text.strip())
+
