@@ -64,14 +64,10 @@ def send_media():
             # "media": f"{BASE_DIR}.jpg",
         },
     )
-    js = {
-        "media": keyboard
-    }
     print(keyboard)
     return json.dumps(keyboard)
 
 def main():
-    keyboard = [['ES', 'EN']]
     offset = 0
     while True:
         updates = get_updates(offset)
